@@ -5,22 +5,23 @@ export const userActions = {
     login,
     logout
 };
-
+// Here using reqres.in for login.
+// return an access token : "QpwL5tke4Pnpja7X4"
 function login(username, password){
     return dispatch => {
-        let apiEndpoint = 'auths';
+        let apiEndpoint = 'login';
         let payload = {
             username: username,
             password: password
         }
-        userService.post(apiEndpoint, payload)
+        userService.login(apiEndpoint, payload)
         .then((response)=>{
             console.log(response.data);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('auth', response.data.auth);
                 dispatch(setUserDetails(response.data));
-                history.push('/home');
+                history.push('/vendor');
             }
         })
     };

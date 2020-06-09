@@ -15,7 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 
@@ -65,6 +64,8 @@ const styles = theme => ({
 
 class Vendor extends Component {
     
+  // Once the component mounted, will go get employee list
+  // Similiar with React.useEffect
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(vendorAction.getVendor());
@@ -123,27 +124,22 @@ class Vendor extends Component {
                           <TableHead>
                           <TableRow>
                               <TableCell>Name</TableCell>
-                              <TableCell numeric>Mobile</TableCell>
-                              <TableCell numeric>Phone</TableCell>
-                              <TableCell>Address</TableCell>
+                              <TableCell>Salary</TableCell>
+                              <TableCell>Age</TableCell>
                               <TableCell>Action</TableCell>
                           </TableRow>
                           </TableHead>
                           <TableBody>
                           {vendor.map(n => {
                               return (
-                              <TableRow key={n._id}>
+                              <TableRow key={n.id}>
                                   <TableCell component="th" scope="row">
-                                  {n.name}
+                                  {n.employee_name}
                                   </TableCell>
-                                  <TableCell numeric>{n.mobile}</TableCell>
-                                  <TableCell numeric>{n.phone_number}</TableCell>
-                                  <TableCell>{n.address}</TableCell>
+                                  <TableCell>{n.employee_salary}</TableCell>
+                                  <TableCell>{n.employee_age}</TableCell>
                                   <TableCell>
-                                    <IconButton className={classes.button} aria-label="Edit" component='a' href={`/edit-vendor/${n._id}`}>
-                                      <EditIcon />
-                                    </IconButton>
-                                    <IconButton className={classes.button} aria-label="Delete" onClick={(event) => this.handleClick(event, n._id)}>
+                                    <IconButton className={classes.button} aria-label="Delete" onClick={(event) => this.handleClick(event, n.id)}>
                                       <DeleteIcon />
                                     </IconButton>
                                   </TableCell>

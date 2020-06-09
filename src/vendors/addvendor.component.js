@@ -62,32 +62,17 @@ class AddVendor extends Component {
         dispatch(vendorAction.onChangeProps(prop, event));
     };
 
-    componentDidMount() {
-        const { match : {params } } = this.props;
-
-        if(params.id){
-            const { dispatch } = this.props;
-            dispatch(vendorAction.getVendorById(params.id));
-        }
-    }
-
-
     handleClick(event){
         const { match : {params } } = this.props;
         const { dispatch } = this.props;
             
         let payload={
             name: this.props.vendor.name,
-            mobile: this.props.vendor.mobile,
-            phone_number: this.props.vendor.phone_number,
-            address: this.props.vendor.address,
+            salary: this.props.vendor.salary,
+            age: this.props.vendor.age,
         }
 
-        if(params.id){
-            dispatch(vendorAction.editVendorInfo(params.id, payload));
-        }else{
-            dispatch(vendorAction.createVendor(payload));
-        }
+        dispatch(vendorAction.createVendor(payload));
     }
 
 
@@ -101,15 +86,8 @@ class AddVendor extends Component {
         return <Typography>{'Add New Vendor'}</Typography>;
       }
       
-      function EditText(props) {
-          return <Typography>{'Edit Vendor'}</Typography>;
-      }
-
 
     function SegHeader() {
-        if(params.id){
-            return <EditText />;
-        }
         return <InsertText />;
     }
      
@@ -150,33 +128,21 @@ class AddVendor extends Component {
                                         </Grid>
                                         <Grid item xs={3}>
                                             <TextField
-                                                id="mobile"
-                                                label="Mobile"
+                                                id="salary"
+                                                label="Salary"
                                                 className={classes.textField}
-                                                value={this.props.vendor.mobile}
-                                                onChange={this.handleChange('mobile')}
+                                                value={this.props.vendor.salary}
+                                                onChange={this.handleChange('salary')}
                                                 margin="normal"
                                             />
                                         </Grid>
                                         <Grid item xs={3}>
                                             <TextField
-                                                id="phone_number"
-                                                label="Phone"
+                                                id="age"
+                                                label="Age"
                                                 className={classes.textField}
-                                                value={this.props.vendor.phone_number}
-                                                onChange={this.handleChange('phone_number')}
-                                                margin="normal"
-                                            />
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <TextField
-                                                id="address"
-                                                label="Address"
-                                                multiline
-                                                rowsMax="4"
-                                                className={classes.textField}
-                                                value={this.props.vendor.address}
-                                                onChange={this.handleChange('address')}
+                                                value={this.props.vendor.age}
+                                                onChange={this.handleChange('age')}
                                                 margin="normal"
                                             />
                                         </Grid>
@@ -215,7 +181,6 @@ class AddVendor extends Component {
    }
 }
 
-//export default Home;
 
 AddVendor.propTypes = {
     classes: PropTypes.object.isRequired,

@@ -48,7 +48,6 @@ const styles = theme => ({
         display: 'none',
     },
   });
-
   
 class Login extends Component {
 
@@ -64,7 +63,7 @@ class Login extends Component {
     componentDidMount() {
         console.log(this.props);
         if(localStorage.getItem('auth')){
-            history.push('/home');
+            history.push('/vendor');
         }
     }
 
@@ -85,6 +84,7 @@ class Login extends Component {
       const { classes } = this.props;
       return (
         <div className="login-margin">
+            
             <Grid container spacing={24}>
                 <Grid item xs={3}>
                 </Grid>
@@ -92,6 +92,7 @@ class Login extends Component {
                     <Paper className={classes.paper}>
                         <Typography><h1>{'Login'}</h1></Typography>
                     </Paper>
+
                     <Paper className={classes.paper}>
                         <div>
                         <TextField
@@ -115,6 +116,7 @@ class Login extends Component {
                         <Button variant="contained" color="primary" className={classes.button} onClick={(event)=>{this.login()}}>
                             Login
                         </Button>
+                        <p>Username:eve.holt@reqres.in <br/> password: cityslicka</p>
                         </div>
                     </Paper>
                 </Grid>

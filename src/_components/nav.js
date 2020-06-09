@@ -9,7 +9,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { userActions } from '../_actions';
 import { connect } from 'react-redux';
-import HomeIcon from '@material-ui/icons/Home';
 import LogoutIcon from '@material-ui/icons/HighlightOff';
 import VendorIcon from '@material-ui/icons/CardTravel';
 
@@ -78,18 +77,12 @@ class Navigation extends React.Component {
                 anchor={anchor}
             >
                 <List component="nav">
-                    <ListItem button component='a' href="/home">
-                        <ListItemIcon>
-                            <HomeIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Home"/>
-                    </ListItem>
 
                     <ListItem button component='a' href="/vendor">
                         <ListItemIcon>
                             <VendorIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Vendors"/>
+                        <ListItemText primary="Employee"/>
                     </ListItem>
 
                     <ListItem button onClick={(event)=>{this.logout()}}>

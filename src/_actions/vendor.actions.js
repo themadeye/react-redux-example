@@ -3,19 +3,33 @@ import { history } from '../_helpers';
 
 export const vendorAction = {
     getVendor,
-    getVendorById,
     onChangeProps,
-    editVendorInfo,
     createVendor,
     deleteVendorById
 };
 
-function getVendor(){
+var  deletedID = [];
+
+function getVendor(id){
     return dispatch => {
-        let apiEndpoint = 'vendors';
+        let apiEndpoint = 'employees';
         userService.get(apiEndpoint)
         .then((response)=>{
-            console.log(response);
+            // Delete and update is impossible due to using fake API service.
+            // This little function here is to check which id has been delete by user and then remove it from the list
+            // BUT DO KEEP IN MIND: after refresh the page, all the deleted data will show again since now are using a fake API service, not own database server.
+            if(id){
+                deletedID.push(id);
+                let data = response.data.data;
+                data.map((k,v) => {
+                    if(deletedID.includes(k.id)){
+                        response.data.data.splice(v, 1) 
+                    }
+                })
+            }else{
+                deletedID = [];
+            }
+
             dispatch(changeVendorsList(response.data.data));
         }).catch((err)=>{
             console.log("Error");
@@ -24,26 +38,17 @@ function getVendor(){
     };
 }
 
+// calling fake API here: http://dummy.restapiexample.com/api/v1/create
 function createVendor(payload){
     return dispatch => {
-        let apiEndpoint = 'vendors/';
+        let apiEndpoint = 'create';
         userService.post(apiEndpoint, payload)
         .then((response)=>{
+            console.log('create employees',response);
             dispatch(createUserInfo());
             history.push('/vendor');
         }) 
     }
-}
-
-function getVendorById(id){
-
-    return dispatch => {
-        let apiEndpoint = 'vendors/'+ id;
-        userService.get(apiEndpoint)
-        .then((response)=>{
-            dispatch(editVendorsDetails(response.data.data));
-        })
-    };
 }
 
 function onChangeProps(props, event){
@@ -52,24 +57,14 @@ function onChangeProps(props, event){
     }
 }
 
-function editVendorInfo(id, payload){
-    return dispatch => {
-        let apiEndpoint = 'vendors/'+ id;
-        userService.put(apiEndpoint, payload)
-        .then((response)=>{
-            dispatch(updatedUserInfo());
-            history.push('/vendor');
-        }) 
-    }
-}
-
 function deleteVendorById(id){
     return dispatch => {
-        let apiEndpoint = 'vendors/'+ id;
+        let apiEndpoint = 'delete/' + id;
         userService.deleteDetail(apiEndpoint)
         .then((response)=>{
+            console.log("delete response", response);
             dispatch(deleteVendorsDetails());
-            dispatch(vendorAction.getVendor());
+            dispatch(vendorAction.getVendor(id));
         })
     };
 }
@@ -86,23 +81,6 @@ export function handleOnChangeProps(props, value){
         type: "HANDLE_ON_CHANGE",
         props: props,
         value: value
-    }
-}
-
-export function editVendorsDetails(vendor){
-    return{
-        type: "VENDOR_DETAIL",
-        id: vendor._id,
-        name: vendor.name,
-        mobile: vendor.mobile,
-        phone_number: vendor.phone_number,
-        address: vendor.address
-    }
-}
-
-export function updatedUserInfo(){
-    return{
-        type: "USER_UPDATED"
     }
 }
 

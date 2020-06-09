@@ -3,9 +3,8 @@ const initialState = { anchor: 'left',
     open: false,
     id: '',  
     name: '',
-    mobile: '',
-    phone_number: '',
-    address: ''
+    salary: '',
+    age: ''
  };
 
 
@@ -21,9 +20,8 @@ export function vendor(state = initialState, action) {
                 ...state,
                 id: action.id,  
                 name: action.name,
-                mobile: action.mobile,
-                phone_number: action.phone_number,
-                address: action.address
+                salary: action.salary,
+                age: action.age
             };
         case "USER_UPDATED":
             return state;
